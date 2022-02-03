@@ -7,6 +7,10 @@ mod components;
 use components::*;
 
 mod rendering;
+mod input;
+mod utils;
+mod systems;
+mod map;
 
 struct State{
     ecs : World
@@ -14,17 +18,21 @@ struct State{
 
 impl GameState for State {
     fn tick(&mut self, ctx: &mut BTerm) {
-
-
+        match ctx.key {
+            Some(key) => input::handle_input(key, &self.ecs),
+            _ => {}
+        }
         rendering::draw(ctx, &self.ecs);
         self.ecs.maintain();
     }
 }
 
 fn main() -> BError {
-    let context = BTermBuilder::simple80x50()
+    let mut context = BTermBuilder::simple80x50()
     .with_title("rolf")
     .build()?;
+
+    context.with_post_scanlines(true);
 
     let mut gs = State {
         ecs : World::new()

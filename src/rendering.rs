@@ -1,5 +1,5 @@
 use specs::{World, WorldExt, Join};
-use bracket_terminal::prelude::{BTerm, to_cp437};
+use bracket_terminal::prelude::{BTerm};
 
 use crate::components::{Position, Drawable};
 
